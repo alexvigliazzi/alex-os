@@ -39,6 +39,28 @@
 - `/documentation` — geração de documentação
 - `/context-first` — carregamento de contexto
 
+## FORMATO DE RESPOSTA — DECLARAÇÃO OBRIGATÓRIA
+
+**Antes de CADA task ou passo**, declarar explicitamente:
+
+```
+## Task: [nome curto]
+**Agente:** [Boss | CEO | CTO | dev/developer | etc.]
+**Ferramentas:** [Bash, Read, Edit, Agent, Grep, etc.]
+**Regra:** [rule aplicada | —]
+**Arquivo(s) alvo:** [lista de arquivos]
+```
+
+**Ao FINALIZAR implementação**, declarar:
+
+```
+## Outputs gerados
+**Arquivos criados:** [lista]
+**Arquivos editados:** [lista]
+```
+
+---
+
 ## BOOTSTRAP DE SESSÃO
 
 **Carregar sempre (ordem exata):**
@@ -154,11 +176,12 @@ Roteamento automático → ver `workflows/_router.md`
 - CLI recall/remember/search: `curl http://localhost:8080/...`
 - Usar via MCP nas sessoes Claude Code — tools disponíveis automaticamente
 
-### ralph — ATIVO (loop autonomo)
-- Script: `scripts/ralph/ralph.sh` (por projeto)
-- Uso: `bash scripts/ralph/ralph.sh --tool claude [N_iteracoes]`
-- Quando usar: feature discovery, PRD multi-sprint, stories autonomas
-- Requer: `prd.json` + `progress.txt` no mesmo diretorio
+### ralph — ATIVO (plugin ralph-loop)
+- Acesso: `/ralph-loop`, `/cancel-ralph`
+- Plugin: `claude-plugins-official/ralph-loop` (instalado)
+- Quando usar: implementacao iterativa APOS PRD/spec aprovada pelo Strategist
+- Prompt deve conter: acceptance criteria da spec + `--completion-promise`
+- **Nota:** `scripts/ralph/ralph.sh` NAO existe. Usar exclusivamente via plugin.
 
 ### squidy — PARCIALMENTE ATIVO
 - Binario: `C:/Users/AlexPraxedesVigliazz/AppData/Local/Programs/Python/Python312/Scripts/squidy.exe`
