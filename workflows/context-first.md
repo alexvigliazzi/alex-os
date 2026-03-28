@@ -18,7 +18,8 @@
    - `~/.claude/context/session-state.md` — last session continuity
    - `~/.claude/context/project.md` — stack, conventions, active work
 
-> **Note:** seshat and th0th are not installed. Skip them. ciam covers semantic search.
+> **Note:** seshat esta disponivel via Docker (porta 3333) como complemento ao ciam.
+> th0th foi removido — supersedido pelo ciam. Nao referenciar.
 
 ## Acquisition Steps
 

@@ -24,7 +24,7 @@ Goal: maximize free local usage, fallback to Claude API when needed.
 | Model | Size | Best For |
 |-------|------|----------|
 | `ollama:gemma3:4b` | ~3GB | Summarization, extraction, formatting, Q&A (simple tasks) |
-| `ollama:nomic-embed-text:latest` | ~274MB | Semantic embeddings (768 dims) for seshat/th0th search |
+| `ollama:nomic-embed-text:latest` | ~274MB | Semantic embeddings (768 dims) for ciam/seshat search |
 | `ollama:bge-m3:latest` | ~1.2GB | Alternative embeddings, multilingual support |
 
 **Constraint:** These are the ONLY free models. They cannot handle complex reasoning, multi-step implementation, or architectural decisions. Accept this limitation.

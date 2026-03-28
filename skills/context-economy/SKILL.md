@@ -18,7 +18,7 @@ Use in order (stop at first available):
 
 **Decision tree:** semantic/keyword → ciam; code patterns/exact path → native; session continuity → context files.
 
-> **Nota:** seshat e th0th são conceituais (sem binários instalados). Funcionalidade coberta pelo ciam.
+> **Nota:** seshat ativo via Docker (porta 3333). th0th removido — supersedido pelo ciam.
 
 ## Compression Strategies
 
