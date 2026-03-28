@@ -144,12 +144,14 @@ Roteamento automático → ver `workflows/_router.md`
 
 ## FERRAMENTAS EXTERNAS — STATUS OPERACIONAL
 
-### ciam (context-ia-manager) — ATIVO via MCP stdio
-- Binario: `C:/Users/AlexPraxedesVigliazz/go/bin/ciam.exe`
+### ciam (context-ia-manager) — ATIVO via MCP stdio + Docker
+- Binario MCP: `C:/Users/AlexPraxedesVigliazz/go/bin/ciam.exe`
+- Docker: container `context-ia-manager-ciam-api-1` (porta 8080)
+- API HTTP: `http://localhost:8080` (status: ok)
 - MCP: Configurado em `~/.claude/mcp.json` e projeto `.mcp.json`
 - Modo Claude Code: stdio (`ciam mcp`)
 - Capacidades: busca semantica, memoria persistente, ADRs, PRDs, planos
-- CLI recall/remember/search requer servidor HTTP (`ciam status`)
+- CLI recall/remember/search: `curl http://localhost:8080/...`
 - Usar via MCP nas sessoes Claude Code — tools disponíveis automaticamente
 
 ### ralph — ATIVO (loop autonomo)
@@ -164,18 +166,26 @@ Roteamento automático → ver `workflows/_router.md`
 - Workaround: `PYTHONIOENCODING=utf-8 squidy <comando>`
 - Capacidades: scaffolding de projeto, audit, status, doctor
 
-### Ollama — ATIVO
+### Ollama — ATIVO via Docker
+- Docker: container `context-ia-manager-ollama-1` (porta 11434, healthy)
 - Endpoint (Git Bash / Windows nativo): `http://localhost:11434`
 - Endpoint (de dentro do WSL): `http://172.26.48.1:11434`
 - Verificar: `curl -s http://localhost:11434/api/tags`
-- Modelos instalados: `gemma3:4b` (3.2GB), `nomic-embed-text:latest` (261MB), `bge-m3:latest` (1.1GB)
+- Modelos instalados: `gemma3:4b` (3.3GB), `nomic-embed-text:latest` (274MB)
 - Rotear tarefas score <= 3 para `gemma3:4b` (GRATIS)
 - OLLAMA_HOST=0.0.0.0:11434 (ouve em todas as interfaces)
+- Visao completa: `docs/specs/ollama-integration-vision.md`
 
-### seshat / th0th — CONCEITUAIS (sem binarios instalados)
-- Definidos em `references/catalog.md` como ferramentas de busca semantica
-- Funcionalidade equivalente coberta pelo ciam em modo MCP
-- Nao instalar sem instrucao explicita do usuario
+### seshat — ATIVO via Docker
+- Docker: container `seshat-api` (porta 3333, healthy)
+- API: `http://localhost:3333`
+- Capacidades: busca semantica com nomic-embed-text via Ollama
+- Complementa ciam para busca local de documentos
+
+### alex-bot — PARADO (token Telegram invalido)
+- Docker: container `alex-bot-bot-1` (parado manualmente)
+- Erro: `TelegramUnauthorizedError` — token revogado
+- Acao: reconfigurar token quando necessario
 
 ---
 
