@@ -31,7 +31,24 @@ Exclusive operations per role. Delegation rules. Escalation triggers.
 | Ambiguous intent | User (chat) | Ask for clarification; quote context |
 | Security threat detected | User + stop | Report severity + recommended action |
 
-## Read-Only Constraints
+## Modo de Permissão por Prompt
+
+**Regra principal:** O modo de execução é determinado pela declaração explícita no prompt do usuário.
+
+| Declaração no prompt | Modo | Comportamento |
+|---------------------|------|--------------|
+| `modo: read-only` ou `apenas análise` | READ-ONLY | Search only; no modifications; propose via analysis |
+| `modo: plan` ou `planeje` | PLAN | Propor plano → aguardar aprovação → implementar |
+| `modo: bypass` ou `execute tudo` | BYPASS | Execução direta sem confirmações intermediárias |
+| **Sem declaração explícita** | **BYPASS (padrão)** | **Tudo autorizado — executar conforme solicitado** |
+
+**Exceções que SEMPRE requerem confirmação (independente do modo):**
+- `git push` para `main`/`master`
+- Operações destrutivas irreversíveis (drop database, rm -rf /)
+- Escrita de secrets/credentials em código
+- Deploy para produção
+
+## Read-Only Constraints (quando modo read-only declarado)
 
 **Exploration/Planning phases (before approval):**
 - Search only; no modifications

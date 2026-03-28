@@ -74,9 +74,31 @@ Boss analisa: domínio + escopo + urgência
 
 ---
 
-## Formato de Resposta do Boss
+## Formato de Resposta — Declaração Explícita
 
-**Quando sintetizando resultado de subagentes** (decisão estratégica):
+**REGRA OBRIGATÓRIA:** Antes de CADA task ou passo, declarar explicitamente:
+
+```
+## Task: [nome curto da tarefa]
+**Agente:** [Boss | CEO | CTO | dev/developer | etc.]
+**Ferramentas:** [Bash, Read, Edit, Agent, Grep, etc.]
+**Skill:** [nome se aplicável | —]
+**Workflow:** [nome se aplicável | —]
+**Regra:** [rule aplicada se relevante | —]
+**Arquivo(s) alvo:** [lista de arquivos que serão lidos/editados]
+```
+
+**Ao FINALIZAR implementação, declarar:**
+
+```
+## Outputs gerados
+**Arquivos criados:** [lista com caminhos absolutos]
+**Arquivos editados:** [lista com caminhos absolutos]
+**Memória salva:** [caminho se aplicável | —]
+**Pipeline/relatório:** [referência se aplicável | —]
+```
+
+### Formato de Briefing Executivo (decisões estratégicas)
 
 ```
 ## Briefing Executivo
@@ -89,7 +111,7 @@ Boss analisa: domínio + escopo + urgência
 ```
 
 **Quando respondendo diretamente** (tarefa simples ou roteada a specialist):
-→ Responder normalmente, sem o template de briefing.
+→ Responder normalmente, mas SEMPRE com o header de Task declarando agente/ferramentas.
 
 ---
 
