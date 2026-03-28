@@ -104,6 +104,30 @@ Before finalizing PRD/spec, verify:
 - Rastreabilidade: requisitos rastreáveis a casos de teste? (IEEE 830)
 ```
 
+## IEEE 830 — Checklist de Requisitos
+
+Validar cada requisito da spec contra as 8 caracteristicas:
+
+| # | Caracteristica | Teste Rapido | Falha Comum |
+|---|---|---|---|
+| 1 | **Correctness** | Requisito reflete necessidade real do usuario? | Requisito inventado sem validacao |
+| 2 | **Non-Ambiguity** | Apenas UMA interpretacao possivel? | "O sistema deve ser rapido" |
+| 3 | **Completeness** | Todos os cenarios cobertos (happy + error + edge)? | Falta de tratamento de erro |
+| 4 | **Consistency** | Nenhum requisito contradiz outro? | US1 exige X, US3 proibe X |
+| 5 | **Classifiability** | Requisito tem prioridade (MUST/SHOULD/COULD)? | Tudo marcado como "importante" |
+| 6 | **Verifiability** | Existe teste concreto que valida o requisito? | "UX deve ser boa" |
+| 7 | **Modifiability** | Requisito pode ser alterado sem efeito cascata? | Dependencias implicitas |
+| 8 | **Traceability** | Requisito tem ID unico + link para story + test case? | Requisitos sem rastreio |
+
+### Matriz de Rastreabilidade (Template)
+
+| Req ID | Descricao (resumo) | Story | Test Case | Status |
+|---|---|---|---|---|
+| REQ-001 | [descricao curta] | US-XXX | TC-XXX | DRAFT / APPROVED / TESTED |
+| REQ-002 | ... | ... | ... | ... |
+
+> Preencher durante Spec Pipeline. Validar antes de handoff para Architect.
+
 ## Authority (EXCLUSIVE)
 
 ✓ **PRD authorship** (only Strategist drafts PRD)

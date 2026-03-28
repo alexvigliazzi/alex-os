@@ -58,10 +58,45 @@ Two-stage filtering: intent evaluation → severity scoring.
 
 ## AI Agent Security (ECMA-434)
 
-Perfis de segurança para comunicação NLIP entre agents:
-- **Profile 1** (obrigatório): TLS, autenticação, ethical design
-- **Profile 2** (enterprise): client auth, escopos de autorização, throttling, audit log
-- **Profile 3** (service providers): prevenção de prompt injection, behavior controls, prevenção de information leakage
+Perfis de seguranca para comunicacao NLIP entre agents. Cada perfil e cumulativo.
 
-**Aplicar quando**: código envolver APIs de agent IA, endpoints NLIP ou comunicação multi-agent.
-**Fonte**: `~/.claude/.claude-skills/references/regulamentacao-tecnica-dev/sec-prof-natural-language-interaction-protocol_ECMA-434_1st_edition_december_2025.md`
+### Profile 1 — Mandatory (todo agent)
+
+| Countermeasure | Requisito |
+|---|---|
+| TLS 1.3 | Criptografia em transito obrigatoria para toda comunicacao NLIP |
+| OAuth 2.0 | Autenticacao de agent-to-agent e agent-to-user |
+| Input sanitization | Validar/escapar toda entrada antes de processar |
+| Output encoding | Codificar saidas para prevenir injection em downstream |
+| Session management | Tokens com TTL, rotacao e invalidacao explicita |
+| Error handling seguro | Sem disclosure de stack traces, paths ou schemas internos |
+| Audit logging | Log de toda interacao NLIP (who, when, what, result) |
+
+### Profile 2 — Enterprise (P1 + extensoes)
+
+| Countermeasure | Requisito |
+|---|---|
+| Indirect prompt injection prevention | Detectar instrucoes injetadas via conteudo de tools/RAG/docs |
+| Content source verification | Verificar origem e integridade de dados consumidos pelo agent |
+| Behavioral anomaly detection | Monitorar desvios do comportamento esperado do agent |
+| Enhanced audit trails | Audit imutavel com correlacao cross-agent |
+| Throttling | Rate limiting por agent, por tenant e por endpoint |
+
+### Profile 3 — Service Providers (P1 + P2 + extensoes)
+
+| Countermeasure | Requisito |
+|---|---|
+| Multi-tenant isolation | Dados e contexto de um tenant nunca vazam para outro |
+| SLA compliance | Metricas de uptime, latencia e throughput por contrato |
+| Incident response | Playbook automatizado para breach/anomalia detectada |
+| Advanced threat intelligence | Feed de ameacas especificas para AI/NLIP integrado |
+
+### Aplicar quando
+
+- Codigo envolve API de agent IA ou endpoint NLIP
+- Comunicacao multi-agent (agent-to-agent)
+- RAG pipeline que ingere conteudo externo (P2+)
+- Servico exposto a multiplos tenants (P3)
+- Review de PR com mudancas em camada de agent
+
+**Fonte**: `~/.claude/references/regulamentacao-tecnica-dev/sec-prof-natural-language-interaction-protocol_ECMA-434_1st_edition_december_2025.md`

@@ -36,6 +36,9 @@ memory/*.md
 # Legacy
 .claude-skills/
 
+# Obsidian vault (120MB — sincronizado via OneDrive junction, nao vai para git)
+brain/
+
 # OS
 .DS_Store
 Thumbs.db

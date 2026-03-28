@@ -10,7 +10,7 @@ Atualizado: 2026-03-28
 | **context-ia-manager** (ciam) | MCP server em Go — busca semantica hibrida, memoria persistente, ADRs | **ATIVO** (Docker:8080 + MCP stdio) | `cmd/ciam/commands/`, `internal/` | Busca semantica, memoria de longo prazo, decisoes anteriores |
 | **seshat** | API de busca semantica com nomic-embed-text | **ATIVO** (Docker:3333) | API REST | Complemento ao ciam para busca local de documentos |
 | **Ollama** | LLM local — gemma3:4b (texto) + nomic-embed-text (embeddings) | **ATIVO** (Docker:11434) | `references/ollama-setup.md`, `scripts/utils/ollama-router.sh` | Roteamento gratuito score <= 3, embeddings locais |
-| **ralph** | Loop autonomo de iteracao — PRD, stories, feature discovery | **PARCIAL** | `scripts/ralph/ralph.sh` | Feature discovery, PRD multi-sprint, stories autonomas |
+| **ralph** | Loop autonomo de iteracao — implementacao iterativa pos-spec | **ATIVO** | Plugin `ralph-loop` (`/ralph-loop`) | Implementacao iterativa APOS PRD/spec aprovada |
 | **aiox-core** | Base do Alex-OS — constitution, agents, workflows, governance | **INCORPORADO** | `.claude/rules/`, `.claude/agents/` | Framework ja ativo — nao precisa consulta separada |
 
 ## Ferramentas Conceituais / Paradas

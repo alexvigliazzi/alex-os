@@ -108,13 +108,34 @@ Reject findings if:
 - [ ] Tests document expected behavior?
 - [ ] PR description links story?
 
-### Accessibility (WCAG 2.2)
-- [ ] Mudança de frontend/UI? Se sim: critérios WCAG 2.2 Level AA verificados?
-  - Perceptível: alternativas textuais, legendas, adaptável, distinguível
-  - Operável: teclado, sem risco de convulsão, navegável
-  - Compreensível: legível, previsível, assistência a entrada
-  - Robusto: compatível com tecnologias assistivas
-- [ ] Nível de conformidade documentado no PR? (A / AA / AAA)
+### Accessibility (WCAG 2.2 Level AA)
+- [ ] Mudanca de frontend/UI? Se sim, verificar itens abaixo:
+
+**Perceivable**
+- [ ] Alternativas textuais para todo conteudo nao-textual (img alt, aria-label)
+- [ ] Contraste minimo 4.5:1 para texto normal, 3:1 para texto grande
+- [ ] Reflow: conteudo funcional em 320px de largura sem scroll horizontal
+- [ ] Contraste nao-textual: 3:1 para componentes UI e graficos informativos
+
+**Operable**
+- [ ] Toda funcionalidade acessivel via teclado (sem armadilha de foco)
+- [ ] Focus visible: indicador de foco claramente visivel em todos os elementos interativos
+- [ ] Focus not obscured: elemento focado nao completamente oculto por outros elementos (2.4.12)
+- [ ] Dragging alternatives: toda acao de arrastar tem alternativa single-pointer (2.5.7)
+- [ ] Target size: alvos de toque/clique minimo 24x24 CSS pixels (2.5.8)
+
+**Understandable**
+- [ ] Idioma da pagina declarado (`html lang="xx"`)
+- [ ] Navegacao consistente: menus e patterns repetidos na mesma ordem
+- [ ] Error identification: erros de formulario identificados e descritos em texto
+- [ ] Accessible authentication: login sem teste cognitivo ou com alternativa (3.3.8)
+
+**Robust**
+- [ ] HTML valido: sem erros de parsing que quebrem assistive tech
+- [ ] Name, role, value: todos os componentes custom tem ARIA roles corretos
+- [ ] Status messages: mensagens de status anunciadas sem receber foco (`role="status"` / `aria-live`)
+
+- [ ] Nivel de conformidade documentado no PR? (A / AA / AAA)
 
 ## Standards References (Gates Ativos)
 
