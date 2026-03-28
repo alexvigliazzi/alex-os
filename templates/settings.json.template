@@ -1,0 +1,211 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "mcp__ciam__ciam_search",
+      "mcp__ciam__ciam_decision_context",
+      "mcp__ciam__ciam_plan_search"
+    ],
+    "defaultMode": "bypassPermissions",
+    "additionalDirectories": [
+      "C:\\Users\\AlexPraxedesVigliazz\\.codeium\\windsurf\\memories",
+      "C:\\Users\\AlexPraxedesVigliazz\\.codeium\\windsurf",
+      "C:\\Users\\AlexPraxedesVigliazz"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/language-protocol.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/hooks/pre-session.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\":\"Protocolo PT-BR ativo: todas as respostas serão em Português-BR.\"}'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/hooks/pre-tool-use.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/hooks/post-tool-use.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/hooks/notification.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/hooks/post-session.sh",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/export-session.sh",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  },
+  "fileSuggestion": {
+    "type": "command",
+    "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/utils/file-suggestion.sh"
+  },
+  "apiKeyHelper": "/c/Users/AlexPraxedesVigliazz/.claude/scripts/utils/api-key-helper.sh",
+  "statusLine": {
+    "type": "command",
+    "command": "bash /c/Users/AlexPraxedesVigliazz/.claude/scripts/utils/status-line.sh",
+    "timeout": 3
+  },
+  "enabledPlugins": {
+    "agent-sdk-dev@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "csharp-lsp@claude-plugins-official": true,
+    "explanatory-output-style@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "jdtls-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "learning-output-style@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "mcp-server-dev@claude-plugins-official": true,
+    "php-lsp@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "ruby-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "customer-support@knowledge-work-plugins": true,
+    "data@claude-plugins-official": true,
+    "design@knowledge-work-plugins": true,
+    "engineering@knowledge-work-plugins": true,
+    "enterprise-search@knowledge-work-plugins": true,
+    "finance@knowledge-work-plugins": true,
+    "human-resources@knowledge-work-plugins": true,
+    "legal@knowledge-work-plugins": true,
+    "marketing@knowledge-work-plugins": true,
+    "operations@knowledge-work-plugins": true,
+    "productivity@knowledge-work-plugins": true,
+    "product-management@knowledge-work-plugins": true,
+    "sales@knowledge-work-plugins": true,
+    "cowork-plugin-management@knowledge-work-plugins": true,
+    "slack-by-salesforce@knowledge-work-plugins": true,
+    "apollo@knowledge-work-plugins": true,
+    "common-room@knowledge-work-plugins": true,
+    "brand-voice@knowledge-work-plugins": true,
+    "planetscale@claude-plugins-official": true,
+    "adspirer-ads-agent@claude-plugins-official": true,
+    "sanity-plugin@claude-plugins-official": true,
+    "zoominfo@claude-plugins-official": true,
+    "mintlify@claude-plugins-official": true,
+    "daloopa@knowledge-work-plugins": true,
+    "zapier@claude-plugins-official": true,
+    "intercom@claude-plugins-official": true,
+    "cockroachdb@claude-plugins-official": true,
+    "prisma@claude-plugins-official": true,
+    "fastly-agent-toolkit@claude-plugins-official": true,
+    "cloudinary@claude-plugins-official": true,
+    "nimble@claude-plugins-official": true,
+    "brightdata-plugin@claude-plugins-official": true,
+    "searchfit-seo@claude-plugins-official": true,
+    "atlan@claude-plugins-official": true,
+    "ai-firstify@claude-plugins-official": true,
+    "product-tracking-skills@claude-plugins-official": true,
+    "postiz@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "zapier@knowledge-work-plugins": true,
+    "ai-firstify@knowledge-work-plugins": true,
+    "cli-anything@cli-anything": true
+  },
+  "extraKnownMarketplaces": {
+    "knowledge-work-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/knowledge-work-plugins"
+      }
+    },
+    "cli-anything": {
+      "source": {
+        "source": "github",
+        "repo": "HKUDS/CLI-Anything"
+      }
+    }
+  },
+  "language": "portuguese",
+  "effortLevel": "medium",
+  "autoUpdatesChannel": "latest",
+  "skipDangerousModePermissionPrompt": true
+}

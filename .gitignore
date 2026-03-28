@@ -1,0 +1,49 @@
+# ============================================
+# Alex-OS .gitignore
+# Exclui arquivos gerenciados pelo Claude Code
+# ============================================
+
+# Sistema Claude Code (nunca versionar)
+sessions/
+session-env/
+file-history/
+plugins/
+cache/
+plans/
+shell-snapshots/
+ide/
+tasks/
+telemetry/
+paste-cache/
+backups/
+downloads/
+scheduled-tasks/
+projects/
+
+# Credenciais e estado de sessao
+*.credentials.json
+.credentials.json
+.claude.json
+history.jsonl
+security_warnings_state_*.json
+mcp-needs-auth-cache.json
+settings.local.json
+
+# Memoria pessoal (cada instalacao tem a sua)
+memory/*.md
+!memory/.gitkeep
+
+# Legacy
+.claude-skills/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# Security artifacts
+security/*.bak
+security/*.MALWARE*

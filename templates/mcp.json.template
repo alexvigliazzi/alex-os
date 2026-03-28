@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "ciam": {
+      "command": "C:/Users/AlexPraxedesVigliazz/go/bin/ciam.exe",
+      "args": ["mcp"],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    },
+    "playwriter": {
+      "command": "playwriter",
+      "args": [],
+      "env": {
+        "PLAYWRITER_AUTO_ENABLE": "1"
+      }
+    }
+  }
+}

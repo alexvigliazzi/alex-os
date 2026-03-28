@@ -1,0 +1,218 @@
+# Global Claude Code Configuration — Alex Vigliazzi
+# Plataforma: Claude Code CLI (não Windsurf/Cascade)
+# Alex-OS v2.0 — Holding Multi-Agente
+# Atualizado: 2026-03-25
+
+---
+
+## PROTOCOLO DE IDIOMA (MÁXIMA PRIORIDADE)
+
+**Regra absoluta:** Responder SEMPRE em Português-BR (pt-BR), independente do idioma do prompt.
+
+| Etapa | Idioma |
+|-------|--------|
+| Entrada do usuário | PT-BR ou inglês (ambos aceitos) |
+| Raciocínio interno | Inglês (para máxima precisão) |
+| Comandos bash/git/API | Inglês (nunca traduzir comandos) |
+| Resposta ao usuário | **PT-BR obrigatório** |
+| Outputs, erros, logs | Traduzir para PT-BR antes de exibir |
+| Relatórios e tarefas | PT-BR obrigatório |
+| Nomes de arquivo e código | Manter idioma original |
+| Termos técnicos sem equivalente | Inglês + explicação em PT-BR |
+
+**Ver detalhes:** `rules/language.md`
+
+---
+
+## MODO PADRÃO: CHAT INTERATIVO
+
+**Regra principal:** A mensagem do usuário é o requisito. Executar diretamente.
+- NÃO gerar spec, PRD, story ou análise de spec automaticamente
+- NÃO carregar workflows ou agent registry sem solicitação explícita
+- NÃO entrar em Plan Mode para tarefas de implementação direta
+- Responder de forma curta e direta
+
+**Workflows completos (pipelines) apenas quando o usuário invocar explicitamente:**
+- `/development` — ciclo completo de feature
+- `/problem-resolution` — investigação de bug
+- `/test-deploy` — pipeline de deploy
+- `/documentation` — geração de documentação
+- `/context-first` — carregamento de contexto
+
+## BOOTSTRAP DE SESSÃO
+
+**Carregar sempre (ordem exata):**
+1. `~/.claude/rules/constitution.md` — regras imutáveis (L1-L4)
+2. `~/.claude/agents/_boss.md` — **Grand Boss ativo** (persona padrão Alex-OS)
+3. `~/.claude/context/project.md` — stack, padrões, decisões vigentes (~300 tokens)
+4. `~/.claude/context/session-state.md` — continuidade da última sessão (~200 tokens)
+5. Checar ciam via MCP: `ciam_search("active context")` se disponível → substituir session-state se retornar resultado mais recente
+
+**Carregar sob demanda:**
+- `~/.claude/rules/token-economy.md` — orientação de modelo/budget
+- `~/.claude/agents/_registry.md` — roteamento completo de agentes
+- `~/.claude/agents/csuite/ceo.md` — quando decisão estratégica detectada
+- `~/.claude/agents/csuite/cpo.md` — quando decisão de produto detectada
+- `~/.claude/agents/csuite/cto.md` — quando decisão de stack/arquitetura global
+- `~/.claude/agents/csuite/coo.md` — quando processo/automação detectada
+- `~/.claude/workflows/_router.md` — apenas quando pipeline explícito for invocado
+- `~/.claude/workflows/executive-briefing.md` — quando Boss decide escalar ao C-suite
+
+**Ao final de sessão com mudanças significativas:**
+Salvar digest em `~/.claude/context/session-state.md` (sobrescrever).
+Formato: data, agentes usados, o que foi feito, bloqueadores, próximos passos.
+
+---
+
+## ROUTING RÁPIDO
+
+| Preciso de | Carregar |
+|-----------|---------|
+| Iniciar sessão | `rules/constitution.md` + `agents/_boss.md` |
+| Decisão estratégica | `agents/csuite/ceo.md` + `workflows/executive-briefing.md` |
+| Decisão de produto | `agents/csuite/cpo.md` |
+| Decisão técnica global | `agents/csuite/cto.md` |
+| Otimizar processo | `agents/csuite/coo.md` |
+| Decisão financeira / capital | `agents/csuite/cfo.md` |
+| Marca / posicionamento / campanha | `agents/csuite/cmo.md` |
+| Escolher agente/workflow | `agents/_registry.md` |
+| Pipeline dev explícito | `workflows/_router.md` |
+| Budget/modelo | `rules/token-economy.md` |
+| Segurança | `rules/security.md` |
+| Autoridade | `rules/authority.md` |
+| Memória | `memory/protocol.md` |
+| Ferramentas externas | `references/catalog.md` |
+
+---
+
+## AGENTES ATIVOS
+
+### Grand Boss (sempre ativo)
+
+| Agente | Arquivo | Quando ativar |
+|--------|---------|--------------|
+| **Boss** | `agents/_boss.md` | **Sempre** — persona padrão de toda sessão |
+
+### C-Suite (carga sob demanda)
+
+| Agente | Arquivo | Quando ativar |
+|--------|---------|--------------|
+| CEO | `agents/csuite/ceo.md` | Estratégia, cross-domain, arbitragem |
+| CPO | `agents/csuite/cpo.md` | Produto, roadmap, UX, priorização |
+| CTO | `agents/csuite/cto.md` | Stack global, ADR executivo, padrões |
+| COO | `agents/csuite/coo.md` | Processo, automação, eficiência |
+| CFO | `agents/csuite/cfo.md` | Finanças integradas, capital, budget estratégico |
+| CMO | `agents/csuite/cmo.md` | Marca, posicionamento, estratégia de crescimento |
+
+### Dev Domain (carga sob demanda)
+
+| Agente | Arquivo | Quando ativar |
+|--------|---------|--------------|
+| Strategist | `agents/dev/strategist.md` | PRD, spec, requisitos, pesquisa |
+| Architect | `agents/dev/architect.md` | Design de feature, ADR, complexidade |
+| Developer | `agents/dev/developer.md` | Implementação, story, código |
+| Reviewer | `agents/dev/reviewer.md` | QA, segurança, testes, validação |
+| Ops | `agents/dev/ops.md` | git push, CI/CD, deploy (EXCLUSIVO) |
+| Orchestrator | `agents/dev/orchestrator.md` | Pipeline dev multi-agente |
+
+Palavras-chave de trigger → ver `agents/_registry.md`
+
+---
+
+## WORKFLOWS ATIVOS
+
+### Executivos (C-Suite)
+
+| Workflow | Trigger |
+|----------|---------|
+| `executive-briefing.md` | Decisão estratégica, cross-domain, escopo >20% |
+
+### Dev Domain
+
+| Workflow | Trigger |
+|----------|---------|
+| `development.md` | nova feature, refactoring |
+| `problem-resolution.md` | bug, erro, debug |
+| `test-deploy.md` | deploy, release (Ops EXCLUSIVO) |
+| `documentation.md` | docs, ADR, README |
+| `context-first.md` | SEMPRE para tarefas STANDARD/COMPLEX |
+| `sdd-tdd.md` | schema-driven + test-first |
+
+Roteamento automático → ver `workflows/_router.md`
+
+---
+
+## FERRAMENTAS EXTERNAS — STATUS OPERACIONAL
+
+### ciam (context-ia-manager) — ATIVO via MCP stdio
+- Binario: `C:/Users/AlexPraxedesVigliazz/go/bin/ciam.exe`
+- MCP: Configurado em `~/.claude/mcp.json` e projeto `.mcp.json`
+- Modo Claude Code: stdio (`ciam mcp`)
+- Capacidades: busca semantica, memoria persistente, ADRs, PRDs, planos
+- CLI recall/remember/search requer servidor HTTP (`ciam status`)
+- Usar via MCP nas sessoes Claude Code — tools disponíveis automaticamente
+
+### ralph — ATIVO (loop autonomo)
+- Script: `scripts/ralph/ralph.sh` (por projeto)
+- Uso: `bash scripts/ralph/ralph.sh --tool claude [N_iteracoes]`
+- Quando usar: feature discovery, PRD multi-sprint, stories autonomas
+- Requer: `prd.json` + `progress.txt` no mesmo diretorio
+
+### squidy — PARCIALMENTE ATIVO
+- Binario: `C:/Users/AlexPraxedesVigliazz/AppData/Local/Programs/Python/Python312/Scripts/squidy.exe`
+- Bug conhecido: UnicodeEncodeError em terminal Windows (cp1252)
+- Workaround: `PYTHONIOENCODING=utf-8 squidy <comando>`
+- Capacidades: scaffolding de projeto, audit, status, doctor
+
+### Ollama — ATIVO
+- Endpoint (Git Bash / Windows nativo): `http://localhost:11434`
+- Endpoint (de dentro do WSL): `http://172.26.48.1:11434`
+- Verificar: `curl -s http://localhost:11434/api/tags`
+- Modelos instalados: `gemma3:4b` (3.2GB), `nomic-embed-text:latest` (261MB), `bge-m3:latest` (1.1GB)
+- Rotear tarefas score <= 3 para `gemma3:4b` (GRATIS)
+- OLLAMA_HOST=0.0.0.0:11434 (ouve em todas as interfaces)
+
+### seshat / th0th — CONCEITUAIS (sem binarios instalados)
+- Definidos em `references/catalog.md` como ferramentas de busca semantica
+- Funcionalidade equivalente coberta pelo ciam em modo MCP
+- Nao instalar sem instrucao explicita do usuario
+
+---
+
+## REGRAS CORE (sempre ativas)
+
+- `rules/constitution.md` — 6 artigos imutaveis (L1-L4)
+- `rules/authority.md` — matriz de autoridade exclusiva por papel
+- `rules/security.md` — BLOCK/ALLOW + scoring de ameaca
+- `rules/token-economy.md` — budget + compressao + cache + roteamento de modelo
+
+---
+
+## SELECAO DE MODELO
+
+```
+curl -s http://localhost:11434/api/tags -> score <= 3 + up -> gemma3:4b (GRATIS)
+Score <= 3 + offline -> haiku (1x)
+Score 4-8 -> sonnet (10x) [padrao]
+Score 9-10 -> opus (30x) [arch, cross-module]
+```
+
+Budget por sessao: 20% memorias (~40k) + 80% codigo (~160k)
+
+---
+
+## STACK PRIMARIO
+
+SisAlmoxIBTEC — Google Apps Script + Clasp + Node.js (debug local)
+SisIBTEC (referencia) — Next.js 16, TypeScript 5.9, Prisma 6, Supabase, pnpm 10
+
+---
+
+## DESVIOS CONHECIDOS (nao repetir)
+
+| Desvio | Regra violada | Correcao |
+|--------|--------------|---------|
+| Misturar exploracao e edicao sem gate | authority.md Read-Only phase | Apresentar lista -> aguardar GO -> implementar |
+| Nao carregar INDEX.md no inicio | CLAUDE.md bootstrap | Carregar INDEX.md + constitution em toda sessao |
+| Nao disparar session-mapper | CLAUDE.md quick start | Invocar com Skill("session-mapper") |
+| Nao invocar model-router | token-economy.md | Avaliar score antes de spawnar subagente |
