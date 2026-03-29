@@ -321,6 +321,298 @@ alex-os/
 
 ---
 
+## Diagramas de Pipeline
+
+### Arquitetura do Sistema
+
+```mermaid
+flowchart TB
+    User["Usuario"]:::user --> Boss["Grand Boss"]:::boss
+
+    Boss --> CSuite
+    Boss --> DevDomain
+
+    subgraph CSuite["C-Suite Executivo"]
+        CEO["CEO\nEstrategia"]:::csuite
+        CPO["CPO\nProduto"]:::csuite
+        CTO["CTO\nArquitetura"]:::csuite
+        COO["COO\nProcessos"]:::csuite
+        CFO["CFO\nFinancas"]:::csuite
+        CMO["CMO\nMarca"]:::csuite
+    end
+
+    subgraph DevDomain["Dev Domain"]
+        Strategist["Strategist\nRequisitos"]:::dev
+        Architect["Architect\nDesign"]:::dev
+        Developer["Developer\nCodigo"]:::dev
+        Reviewer["Reviewer\nQA"]:::dev
+        Ops["Ops\nDeploy"]:::dev
+        Orchestrator["Orchestrator\nPipeline"]:::dev
+    end
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef csuite fill:#F3E5F5,stroke:#7B1FA2,color:#7B1FA2
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+```
+
+### Roteamento de Requests
+
+```mermaid
+flowchart TB
+    Prompt["Prompt do Usuario"]:::user --> Boss["Boss analisa"]:::boss
+    Boss --> Domain{"Dominio?"}
+    Domain -->|Dev| Complexity{"Complexidade?"}
+    Domain -->|Executivo| ExecBrief["Executive Briefing"]:::csuite
+    Domain -->|Pessoal| Direct["Resposta Direta"]:::personal
+    Domain -->|Misto| ExecBrief
+
+    Complexity -->|SIMPLE| SingleAgent["Agente Unico"]:::dev
+    Complexity -->|STANDARD| ContextFirst["Context-First\n+ 1-2 Agentes"]:::dev
+    Complexity -->|COMPLEX| Pipeline["Pipeline Completo\nOrchestrator"]:::dev
+
+    ExecBrief --> CSuiteTeam["C-Suite Analisa"]:::csuite
+    CSuiteTeam --> Decision["Decisao → Usuario"]:::user
+
+    SingleAgent --> Result["Resultado"]:::user
+    ContextFirst --> Result
+    Pipeline --> Result
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef csuite fill:#F3E5F5,stroke:#7B1FA2,color:#7B1FA2
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef personal fill:#E0F7FA,stroke:#00695C,color:#00695C
+```
+
+### Pipeline de Desenvolvimento
+
+```mermaid
+flowchart LR
+    S["Strategist\nPRD + Spec"]:::dev --> A["Architect\nADR + Design"]:::dev
+    A --> D["Developer\nImplementacao"]:::dev
+    D --> G1{"Quality\nGate"}:::gate
+    G1 -->|Aprovado| R["Reviewer\nQA + Seguranca"]:::dev
+    G1 -->|Rejeitado| D
+    R --> G2{"Review\nGate"}:::gate
+    G2 -->|Aprovado| O["Ops\nDeploy"]:::prod
+    G2 -->|Rejeitado| D
+    O --> Done["Entregue"]:::user
+
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef gate fill:#FFF8E1,stroke:#F57F17,color:#F57F17
+    classDef prod fill:#FFEBEE,stroke:#C62828,color:#C62828
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+```
+
+### Pipeline Executive Briefing
+
+```mermaid
+flowchart TB
+    Boss["Boss detecta\nescopo estrategico"]:::boss --> Convoca["Convoca C-Suite\nrelevante"]:::csuite
+    Convoca --> Analise["Cada executivo\nanalisa dominio"]:::csuite
+    Analise --> Consenso{"Consenso?"}
+    Consenso -->|Sim| Recomendacao["Recomendacao\nunificada"]:::csuite
+    Consenso -->|Nao| CEO["CEO arbitra\ndivergencia"]:::csuite
+    CEO --> Recomendacao
+    Recomendacao --> Alex["Apresenta\nao usuario"]:::user
+    Alex --> Decisao{"Aprovado?"}
+    Decisao -->|Sim| Executa["Delega execucao\nao Dev Domain"]:::dev
+    Decisao -->|Nao| Revisao["Revisao com\nnovo escopo"]:::csuite
+    Revisao --> Analise
+
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef csuite fill:#F3E5F5,stroke:#7B1FA2,color:#7B1FA2
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+```
+
+### Workflows Especializados
+
+#### Problem Resolution
+
+```mermaid
+flowchart LR
+    T["Triage\nClassificar bug"]:::readonly --> I["Investigate\nRead-Only"]:::readonly
+    I --> H["Hypothesize\nCausa raiz"]:::readonly
+    H --> F["Fix\nImplementar"]:::dev
+    F --> Test["Test\nValidar fix"]:::dev
+    Test --> Rev["Review\nQA gate"]:::gate
+    Rev --> Close["Close\nDocumentar"]:::dev
+
+    classDef readonly fill:#ECEFF1,stroke:#546E7A,color:#546E7A
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef gate fill:#FFF8E1,stroke:#F57F17,color:#F57F17
+```
+
+#### Test and Deploy
+
+```mermaid
+flowchart LR
+    Pre["Pre-flight\nChecklist"]:::dev --> Build["Build\nCompilar"]:::dev
+    Build --> Test["Test\nSuite completa"]:::dev
+    Test --> Stage["Stage\nAmbiente"]:::dev
+    Stage --> Approval{"Aprovacao\nUsuario"}:::gate
+    Approval -->|OK| Deploy["Deploy\nProducao"]:::prod
+    Approval -->|Nao| Fix["Corrigir"]:::dev
+    Fix --> Test
+    Deploy --> Verify["Verify\nSmoke test"]:::prod
+    Verify --> Monitor["Monitor\nObservar"]:::prod
+
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef gate fill:#FFF8E1,stroke:#F57F17,color:#F57F17
+    classDef prod fill:#FFEBEE,stroke:#C62828,color:#C62828
+```
+
+#### SDD-TDD (Metodo Akita)
+
+```mermaid
+flowchart LR
+    Schema["1. Schema\nDefinir estrutura"]:::dev --> Clear1["/clear"]:::gate
+    Clear1 --> Tests["2. Test\nEscrever testes"]:::dev
+    Tests --> Clear2["/clear"]:::gate
+    Clear2 --> Impl["3. Implement\nCodigo minimo"]:::dev
+    Impl --> Clear3["/clear"]:::gate
+    Clear3 --> Validate["4. Validate\nTodos passam?"]:::dev
+
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef gate fill:#FFF8E1,stroke:#F57F17,color:#F57F17
+```
+
+### Cenarios de Exemplo
+
+#### Tarefa Pessoal
+
+```mermaid
+flowchart LR
+    U["Usuario:\nOrganize minha agenda"]:::user --> B["Boss\nDominio: pessoal"]:::boss
+    B --> D["Resposta direta\nSIMPLE"]:::personal
+    D --> R["Resultado\nentregue"]:::user
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef personal fill:#E0F7FA,stroke:#00695C,color:#00695C
+```
+
+#### Ideacao
+
+```mermaid
+flowchart LR
+    U["Usuario:\nIdeia de novo produto"]:::user --> B["Boss\nDominio: executivo"]:::boss
+    B --> CEO["CEO\nVisao estrategica"]:::csuite
+    CEO --> CPO["CPO\nViabilidade produto"]:::csuite
+    CPO --> Brief["Briefing\nconsolidado"]:::csuite
+    Brief --> R["Recomendacao\nao usuario"]:::user
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef csuite fill:#F3E5F5,stroke:#7B1FA2,color:#7B1FA2
+```
+
+#### Desenvolvimento de Software
+
+```mermaid
+flowchart LR
+    U["Usuario:\nNova feature X"]:::user --> B["Boss\nDominio: dev"]:::boss
+    B --> O["Orchestrator\nCOMPLEX"]:::dev
+    O --> S["Strategist\nSpec"]:::dev
+    S --> A["Architect\nDesign"]:::dev
+    A --> D["Developer\nCodigo"]:::dev
+    D --> Rev["Reviewer\nQA"]:::dev
+    Rev --> Ops["Ops\nDeploy"]:::prod
+    Ops --> R["Feature\nentregue"]:::user
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef prod fill:#FFEBEE,stroke:#C62828,color:#C62828
+```
+
+#### Correcao de Bug
+
+```mermaid
+flowchart LR
+    U["Usuario:\nBug no login"]:::user --> B["Boss\nDominio: dev"]:::boss
+    B --> Complexity{"Complexidade?"}
+    Complexity -->|SIMPLE| Dev["Developer\nFix direto"]:::dev
+    Complexity -->|COMPLEX| PR["Problem Resolution\nPipeline completo"]:::dev
+    Dev --> R["Bug corrigido"]:::user
+    PR --> R
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+```
+
+#### Debug
+
+```mermaid
+flowchart LR
+    U["Usuario:\nErro intermitente"]:::user --> B["Boss\nDominio: dev"]:::boss
+    B --> T["Triage\nClassificar"]:::readonly
+    T --> I["Investigate\nLogs + codigo"]:::readonly
+    I --> H["Hypothesize\nCausa raiz"]:::readonly
+    H --> F["Fix\nCorrecao"]:::dev
+    F --> V["Validate\nTeste"]:::dev
+    V --> R["Resolvido"]:::user
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef readonly fill:#ECEFF1,stroke:#546E7A,color:#546E7A
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+```
+
+#### Refatoracao
+
+```mermaid
+flowchart LR
+    U["Usuario:\nRefatorar modulo Y"]:::user --> B["Boss\nDominio: dev"]:::boss
+    B --> A["Architect\nAnalise impacto"]:::dev
+    A --> D["Developer\nRefatorar"]:::dev
+    D --> Rev["Reviewer\nValidar"]:::gate
+    Rev --> R["Codigo limpo"]:::user
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef gate fill:#FFF8E1,stroke:#F57F17,color:#F57F17
+```
+
+#### Posts Instagram
+
+```mermaid
+flowchart LR
+    U["Usuario:\nCrie posts pro Instagram"]:::user --> B["Boss\nDominio: executivo"]:::boss
+    B --> CMO["CMO\nEstrategia de conteudo"]:::csuite
+    CMO --> Content["Gerar\ncopy + visual brief"]:::csuite
+    Content --> Review["Review\ntom de marca"]:::csuite
+    Review --> R["Posts prontos\npara publicar"]:::user
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef csuite fill:#F3E5F5,stroke:#7B1FA2,color:#7B1FA2
+```
+
+#### Tarefas Rotineiras
+
+```mermaid
+flowchart LR
+    U["Usuario:\nAtualize dependencias"]:::user --> B["Boss\nDominio: dev"]:::boss
+    B --> Complexity{"Rotina\nou automacao?"}
+    Complexity -->|Rotina| Dev["Developer\nExecucao direta"]:::dev
+    Complexity -->|Automacao| COO["COO\nDesign de processo"]:::csuite
+    Dev --> R["Concluido"]:::user
+    COO --> Auto["Workflow\nautomatizado"]:::dev
+    Auto --> R
+
+    classDef user fill:#E8F4FD,stroke:#1B6AC9,color:#1B6AC9
+    classDef boss fill:#FFF3E0,stroke:#E65100,color:#E65100
+    classDef dev fill:#E8F5E9,stroke:#2E7D32,color:#2E7D32
+    classDef csuite fill:#F3E5F5,stroke:#7B1FA2,color:#7B1FA2
+```
+
+---
+
 ## Licenca
 
 Uso pessoal. Feito por Alex Vigliazzi.
