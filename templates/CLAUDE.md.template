@@ -243,6 +243,46 @@ SisIBTEC (referencia) — Next.js 16, TypeScript 5.9, Prisma 6, Supabase, pnpm 1
 
 ---
 
+## MODO BYPASS — REGRA DE EXECUÇÃO DIRETA
+
+**Modo padrão é BYPASS** (`defaultMode: bypassPermissions` em settings.json).
+
+**Em modo BYPASS, é PROIBIDO:**
+- Perguntar "Posso prosseguir?" antes de executar
+- Perguntar "Devo fazer X?" quando a ação foi solicitada
+- Pedir confirmação para operações não-destrutivas
+- Pausar execução esperando "OK" textual do usuário
+
+**Confirmação obrigatória SOMENTE para exceções absolutas:**
+- git push para main/master
+- Operações destrutivas irreversíveis (drop database, rm -rf /)
+- Deploy para produção
+- Escrita de secrets em código
+
+Esta regra aplica-se a TODOS os modelos (haiku, sonnet, opus). **Executar diretamente.**
+
+---
+
+## PROTOCOLO DE CUSTO — ESTIMATIVA OBRIGATÓRIA
+
+Antes de toda operação não-conversacional, apresentar bloco de avaliação com:
+1. Score de complexidade (1-10)
+2. Modelo recomendado
+3. Estimativa de custo por etapa em tabela
+
+Ao finalizar, apresentar consumo estimado real.
+Ver formato completo em: `memory/protocol_operation_start.md`
+
+---
+
+## INTERAÇÃO SOCRÁTICA — FORMATO OBRIGATÓRIO
+
+Ao precisar coletar informações ou clarificações do usuário via múltiplas opções,
+usar a ferramenta `AskUserQuestion` (disponível via ToolSearch) que apresenta
+opções clicáveis no input do Claude Code. NÃO usar texto livre com letras [A][B][C].
+
+---
+
 ## DESVIOS CONHECIDOS (nao repetir)
 
 | Desvio | Regra violada | Correcao |
@@ -251,3 +291,5 @@ SisIBTEC (referencia) — Next.js 16, TypeScript 5.9, Prisma 6, Supabase, pnpm 1
 | Nao carregar INDEX.md no inicio | CLAUDE.md bootstrap | Carregar INDEX.md + constitution em toda sessao |
 | Nao disparar session-mapper | CLAUDE.md quick start | Invocar com Skill("session-mapper") |
 | Nao invocar model-router | token-economy.md | Avaliar score antes de spawnar subagente |
+| Sonnet pergunta "posso prosseguir?" | MODO BYPASS — execucao direta | Nao pedir confirmacao textual — executar |
+| Nao apresentar estimativa de custo | protocol_operation_start.md | Incluir tabela de custo antes de toda operacao |
