@@ -73,6 +73,7 @@
 **Carregar sob demanda:**
 - `~/.claude/rules/token-economy.md` — orientação de modelo/budget
 - `~/.claude/agents/_registry.md` — roteamento completo de agentes
+- `~/.claude/agents/csuite/_registry.md` — sub-registry C-Suite (triggers por papel)
 - `~/.claude/agents/csuite/ceo.md` — quando decisão estratégica detectada
 - `~/.claude/agents/csuite/cpo.md` — quando decisão de produto detectada
 - `~/.claude/agents/csuite/cto.md` — quando decisão de stack/arquitetura global
@@ -98,6 +99,7 @@ Formato: data, agentes usados, o que foi feito, bloqueadores, próximos passos.
 | Decisão financeira / capital | `agents/csuite/cfo.md` |
 | Marca / posicionamento / campanha | `agents/csuite/cmo.md` |
 | Escolher agente/workflow | `agents/_registry.md` |
+| Rotear para C-Suite | `agents/csuite/_registry.md` |
 | Pipeline dev explícito | `workflows/_router.md` |
 | Budget/modelo | `rules/token-economy.md` |
 | Segurança | `rules/security.md` |
