@@ -33,6 +33,11 @@
 - Ollama (local): gemma3:4b em localhost:11434 — para tarefas score ≤ 3
 - ralph: loop autônomo para PRD multi-sprint (scripts/ralph/ralph.sh)
 - squidy: scaffolding (workaround: PYTHONIOENCODING=utf-8)
+- gcloud CLI: `/opt/google-cloud-sdk/bin/gcloud` (v502.0.0) — Google Cloud Console
+- clasp: `clasp` (v3.3.0) — deploy Google Apps Script → `cd ~/SisAlmoxIBTEC && clasp push`
+- google-generativeai: `pip3` (v0.8.6) + google-cloud-aiplatform — Gemini API Python SDK
+- Gemini API Key: configurar em `~/.env` como `GEMINI_API_KEY=...` (gerar em aistudio.google.com)
+- Setup script: `bash ~/alex-os/scripts/setup-google-auth.sh` — guia autenticação interativa
 
 ## Trabalho Ativo
 <!-- Atualizado: 2026-03-25 -->
@@ -60,4 +65,11 @@
   - Causa: pet.exe ausente (ms-python.python-2026.4.0 instalado incompleto)
   - python.defaultInterpreterPath fixado em settings.json do Windsurf
   - Ação pendente: reinstalar extensão ms-python.python no Windsurf
+- [x] Setup Google Cloud + Gemini + Clasp (sessão 2026-04-07)
+  - gcloud SDK 502.0.0 instalado em /opt/google-cloud-sdk
+  - clasp 3.3.0 instalado via npm global
+  - google-generativeai 0.8.6 + google-cloud-aiplatform instalados via pip
+  - PATH configurado em /etc/profile.d/gcloud.sh e ~/.bashrc
+  - Script de autenticação: ~/alex-os/scripts/setup-google-auth.sh
+  - Pendente (requer navegador): gcloud auth login, ADC login, clasp login, Gemini API Key
 - [ ] Próxima feature SisAlmoxIBTEC — a definir na próxima sessão
