@@ -1,5 +1,31 @@
-# Project Context — SisAlmoxIBTEC / SisIBTEC
+# Project Context — LeS Fire / SisAlmoxIBTEC / SisIBTEC
 # Atualizar manualmente quando mudar stack ou foco ativo.
+# Atualizado: 2026-04-07
+
+## FOCO ATIVO: LeS Fire — FASE 0
+
+### LeS Fire (prioridade máxima)
+- **Visão**: Sistema Operacional Cognitivo Pessoal ("menos fogo na cabeça")
+- **Fase**: FASE 0 — Fundação & Validação
+- **Branch**: `claude/start-les-fire-project-uiVwp` (todos os repos)
+- **Repos**: `les-fire` (principal), `alex-os` (agents/framework), `ralph` (loop autônomo)
+- **Stack**: Go (orquestrador) + SurrealDB + Ollama + MCP Server
+- **Infra**: `docker-compose.yml` em `les-fire/` — SurrealDB:8000 + Ollama:11434
+- **PRD**: PRD Master v4 (compartilhado pelo usuário em sessão Gemini)
+- **Docs**: `les-fire/docs/` — sessions/, ADR/
+
+### Entregáveis FASE 0 concluídos
+- [x] 0.1 — Repo inicializado (Git + estrutura + docs)
+- [x] 0.2 — docker-compose.yml (SurrealDB + Ollama)
+- [x] 0.6 — Governança ~/.claude/ populada (alex-os install.sh executado em 2026-04-07)
+
+### Entregáveis FASE 0 pendentes
+- [ ] 0.3 — PoC MCP Go (1 tool "echo") — criar em `alex-os` ou `les-fire`
+- [ ] 0.4 — PoC SurrealDB (insert + vector query)
+- [ ] 0.5 — PoC Ollama embeddings → SurrealDB
+- [ ] 0.7 — Bootstrap metacognitivo (dados do Alex ingeridos)
+- [ ] 0.8 — ADR-001 (Go), ADR-002 (SurrealDB), ADR-003 (MCP)
+- [ ] 0.9 — MARKETING-PRD.md redigido (para o pai)
 
 ## Projetos Ativos
 
