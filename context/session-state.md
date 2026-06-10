@@ -3,9 +3,29 @@
 # Formato: sobrescrever este arquivo com o digest da sessão encerrada.
 
 ## Última Sessão
-- **Data**: 2026-03-25
-- **Agentes usados**: nenhum subagente — sessão de configuração/segurança
-- **Tokens usados**: alto (múltiplas sessões de setup concatenadas)
+- **Data**: 2026-04-07
+- **Agentes usados**: Claude Code (claude-sonnet-4-6) — sessão de kickstart FASE 0
+- **Tokens usados**: médio
+
+## O que foi feito (2026-04-07)
+
+### FASE 0 Kickstart — COMPLETO (parcial)
+- npm install em `LeS-Fire/` (ESLint 9, Playwright, Express, Clasp)
+- Alex-OS v2.0 instalado em `~/.claude/` via `install.sh`
+- `docker-compose.yml` criado em `les-fire/` (SurrealDB:8000 + Ollama:11434)
+- `AGENTS.md` criado em `les-fire/` (instruções para agentes AI)
+- `docs/sessions/2026-04-07-kickstart.md` criado (log da sessão)
+- `CLAUDE.md` de `les-fire` atualizado com contexto LeS Fire FASE 0
+- `context/project.md` atualizado com foco LeS Fire
+- Commit + push em `les-fire/` na branch `claude/start-les-fire-project-uiVwp`
+
+## Próximos Passos
+- PoC MCP Go — 1 tool "echo" (item 0.3 da FASE 0)
+- PoC SurrealDB — insert + KNN vector query (item 0.4)
+- PoC Ollama embeddings → SurrealDB (item 0.5)
+- Bootstrap metacognitivo com dados do Alex (item 0.7)
+
+## Sessão anterior (2026-03-25)
 
 ## O que foi feito
 
