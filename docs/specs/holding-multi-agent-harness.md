@@ -317,10 +317,10 @@ memory/
 
 | Layer | Scope | Rule |
 |-------|-------|------|
-| L0 | Holding | Holding-wide policies. Only Tier 0 can modify. |
-| L1 | Subsidiary | Subsidiary-level rules. Tier 1 can modify with Tier 0 approval. |
-| L2 | Domain | Domain-specific guardrails. Tier 2 manages. |
-| L3 | Operational | Day-to-day rules. Tier 3-4 operate within. |
+| L1 | Holding | Holding-wide policies. Only Tier 0 can modify. Extends constitution L1 safety. |
+| L2 | Subsidiary | Subsidiary-level rules. Tier 1 can modify with Tier 0 approval. |
+| L3 | Domain | Domain-specific guardrails. Tier 2 manages. |
+| L4 | Operational | Day-to-day rules. Tier 3-4 operate within. |
 
 ---
 
@@ -359,6 +359,9 @@ agents/
 │   │   ├── finance/
 │   │   │   ├── controller.md
 │   │   │   └── analyst.md
+│   │   ├── product/
+│   │   │   ├── product-manager.md
+│   │   │   └── researcher.md
 │   │   └── operations/
 │   │       ├── process-engineer.md
 │   │       └── project-manager.md
@@ -498,7 +501,7 @@ escalation_chains:
   # Technical escalation
   tech:
     path: [specialist, dept-head, cto, subsidiary-boss, holding-orchestrator, user]
-    timeout_per_level: [0, 5min, 15min, 30min, immediate]
+    timeout_per_level: [0, 5min, 15min, 30min, 60min, immediate]
 
   # Financial escalation
   financial:
@@ -568,8 +571,8 @@ User → Holding Orchestrator
               └─ gamma:operations:process-engineer → Production Plan
                                                           │
               Step 2: subsidiary-beta Boss (receives Production Plan)
-              │
-              └─ beta:commercial:sales → Sales Strategy aligned to plan
+               │
+               └─ beta:product:product-manager → Sales Strategy aligned to plan
                                               │
               Holding Orchestrator
               │
@@ -721,7 +724,7 @@ holding:
       csuite: [ceo, cfo]
       specialists: 5
 
-  total_agents: 41  # 1 holding + 3 tier-1 + 8 csuite + 31 specialists
+  total_agents: 43  # 1 holding + 3 tier-1 + 8 csuite + 31 specialists
   interactions:
     - [saas-co, consulting, service-provider, daily]
     - [saas-co, invest-co, independent, monthly]
